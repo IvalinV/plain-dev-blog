@@ -48,8 +48,17 @@ it('returns 404 for an unknown author slug', function () {
 it('renders an initials fallback when the author has no image', function () {
     $author = Author::factory()->create(['name' => 'Zoe Example', 'image' => null]);
 
-    $this->get(route('authors.show', $author->slug))
+    $response = $this->get(route('authors.show', $author->slug))
         ->assertOk()
-        ->assertSee('rounded-full bg-gray-200', escape: false)
-        ->assertSeeInOrder(['rounded-full bg-gray-200', 'Z'], escape: false);
+        // no image means no <img> tag is rendered
+        ->assertDontSee('<img', escape: false);
+
+    // the uppercased first initial should render as its own text node,
+    // regardless of the CSS classes wrapping it. Whitespace between tags
+    // is normalized first since Blade output includes surrounding
+    // newlines/indentation around the interpolated initial.
+    $normalizedHtml = preg_replace('/>\s+/', '>', $response->getContent());
+    $normalizedHtml = preg_replace('/\s+</', '<', $normalizedHtml);
+
+    expect($normalizedHtml)->toContain('>Z<');
 });
