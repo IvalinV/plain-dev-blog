@@ -27,7 +27,7 @@
                 {{ $post->author->name }} · <time datetime="{{ $post->published_at->toDateString() }}">{{ $post->published_at->format('M j, Y') }}</time>
             </p>
             @if ($post->excerpt)
-                <p class="mt-3 text-gray-700 dark:text-gray-400">{{ $post->excerpt }}</p>
+                <p class="mt-3 text-gray-700 dark:text-gray-300">{{ $post->excerpt }}</p>
             @endif
             @if ($post->tags->isNotEmpty())
                 <div class="mt-3 flex flex-wrap gap-2">

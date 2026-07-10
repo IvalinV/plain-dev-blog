@@ -11,7 +11,6 @@ class AuthorController extends Controller
     {
         $posts = $author->posts()
             ->published()
-            ->with('tags')
             ->latest('published_at')
             ->get();
 

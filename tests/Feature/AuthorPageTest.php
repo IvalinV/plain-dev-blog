@@ -44,3 +44,12 @@ it('does not list unpublished posts', function () {
 it('returns 404 for an unknown author slug', function () {
     $this->get('/authors/does-not-exist')->assertNotFound();
 });
+
+it('renders an initials fallback when the author has no image', function () {
+    $author = Author::factory()->create(['name' => 'Zoe Example', 'image' => null]);
+
+    $this->get(route('authors.show', $author->slug))
+        ->assertOk()
+        ->assertSee('rounded-full bg-gray-200', escape: false)
+        ->assertSeeInOrder(['rounded-full bg-gray-200', 'Z'], escape: false);
+});
