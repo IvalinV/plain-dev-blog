@@ -256,25 +256,27 @@ it('shows author info, social link, and published posts', function () {
         'social_media' => 'https://example.com/ada',
     ]);
 
-    $published = Post::factory()->for($author)->create([
+    $published = Post::factory()->for($author)->published()->create([
         'title' => 'Published Post',
-        'published_at' => now()->subDay(),
     ]);
 
     $this->get(route('authors.show', $author->slug))
         ->assertOk()
         ->assertSee('Ada Lovelace')
         ->assertSee('Mathematician and writer.')
+        ->assertSee($published->title)
         ->assertSee('https://example.com/ada')
-        ->assertSee('Published Post');
+        // confirm the social pill actually renders with new-tab behavior,
+        // not just that the URL appears somewhere in the HTML
+        ->assertSee('target="_blank"', escape: false)
+        ->assertSee('rel="me noopener noreferrer"', escape: false);
 });
 
 it('does not list unpublished posts', function () {
     $author = Author::factory()->create();
 
-    Post::factory()->for($author)->create([
+    Post::factory()->for($author)->draft()->create([
         'title' => 'Secret Draft',
-        'published_at' => null,
     ]);
 
     $this->get(route('authors.show', $author->slug))
