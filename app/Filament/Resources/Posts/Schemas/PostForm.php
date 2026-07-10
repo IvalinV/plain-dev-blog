@@ -49,7 +49,8 @@ class PostForm
                     ->required()
                     ->columnSpanFull(),
                 DateTimePicker::make('published_at')
-                    ->helperText('Leave blank to keep as a draft.'),
+                    ->native(false)
+                    ->helperText('Leave blank to keep as a draft. Stored as-is in UTC; timezone conversion is handled on the frontend.'),
             ]);
     }
 }

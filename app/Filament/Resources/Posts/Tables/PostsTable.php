@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Tables;
 
+use App\Models\Post;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -24,10 +25,22 @@ class PostsTable
                     ->sortable(),
                 TextColumn::make('tags.name')
                     ->badge(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->state(fn (Post $record): string => match (true) {
+                        $record->published_at === null => 'Draft',
+                        $record->published_at->isFuture() => 'Scheduled',
+                        default => 'Published',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'Draft' => 'gray',
+                        'Scheduled' => 'warning',
+                        default => 'success',
+                    }),
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable()
-                    ->placeholder('Draft'),
+                    ->placeholder('-'),
             ])
             ->filters([
                 TernaryFilter::make('published')
