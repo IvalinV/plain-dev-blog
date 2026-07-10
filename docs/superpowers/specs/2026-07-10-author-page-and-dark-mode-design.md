@@ -22,7 +22,7 @@ One migration adding three columns to the existing `authors` table:
 - `image` — `string`, nullable. Stores the avatar path on the `public` disk.
 - `bio` — `text`, nullable. Short descriptive text.
 
-Because the columns are added to an existing table, run `php artisan migrate:fresh --seed` (or reseed authors) so existing rows get slugs. Authors are created via factory in tests, not seeded in `DatabaseSeeder`.
+The migration adds `slug` as nullable, backfills unique slugs for any existing rows via the `Author` model (`HasUniqueSlug`), then promotes `slug` to `NOT NULL UNIQUE`. This keeps the migration safe on databases that already contain authors. Authors are created via factory in tests, not seeded in `DatabaseSeeder`.
 
 ### Model — `App\Models\Author`
 

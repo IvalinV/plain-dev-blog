@@ -46,11 +46,12 @@ php artisan make:migration add_slug_image_bio_to_authors_table --table=authors -
 
 - [ ] **Step 2: Write the migration body**
 
-Edit the generated migration file to:
+Edit the generated migration file. Add `slug` as **nullable first**, backfill any existing rows via the model (so `HasUniqueSlug` generates unique slugs from each author's name), then promote `slug` to `NOT NULL UNIQUE`. This makes the migration safe on databases that already contain authors (a plain `NOT NULL UNIQUE` add with no default fails on 2+ existing rows):
 
 ```php
 <?php
 
+use App\Models\Author;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -60,9 +61,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('authors', function (Blueprint $table): void {
-            $table->string('slug')->unique()->after('name');
+            $table->string('slug')->nullable()->after('name');
             $table->string('image')->nullable()->after('social_media');
             $table->text('bio')->nullable()->after('image');
+        });
+
+        Author::query()
+            ->where(function ($query): void {
+                $query->whereNull('slug')->orWhere('slug', '');
+            })
+            ->get()
+            ->each
+            ->save();
+
+        Schema::table('authors', function (Blueprint $table): void {
+            $table->string('slug')->nullable(false)->change();
+            $table->unique('slug');
         });
     }
 
@@ -75,6 +89,8 @@ return new class extends Migration
     }
 };
 ```
+
+Calling `->save()` triggers the `HasUniqueSlug` `saving` hook, which fills a blank slug with a unique value derived from `name`. On a fresh test database (`RefreshDatabase`) the backfill loop runs over zero rows and is a no-op.
 
 - [ ] **Step 3: Write the failing model test**
 
