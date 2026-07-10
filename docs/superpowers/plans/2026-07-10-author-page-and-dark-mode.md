@@ -354,7 +354,7 @@ Create `resources/views/authors/show.blade.php`:
         <div>
             <h1 class="text-2xl font-bold sm:text-3xl">{{ $author->name }}</h1>
             @if ($author->social_media)
-                <a href="{{ $author->social_media }}" class="text-sm text-amber-600 hover:underline" rel="me">{{ $author->social_media }}</a>
+                <a href="{{ $author->social_media }}" class="text-sm text-amber-600 hover:underline" rel="me noopener noreferrer" target="_blank">{{ $author->social_media }}</a>
             @endif
         </div>
     </div>
