@@ -40,11 +40,7 @@
         <h1 class="mt-4 text-2xl font-bold sm:text-3xl">{{ $post->title }}</h1>
 
         <p class="mt-2 text-sm text-gray-500">
-            @if ($post->author->social_media)
-                <a href="{{ $post->author->social_media }}" class="hover:underline" rel="author">{{ $post->author->name }}</a>
-            @else
-                {{ $post->author->name }}
-            @endif
+            <a href="{{ route('authors.show', $post->author->slug) }}" class="hover:underline" rel="author">{{ $post->author->name }}</a>
             · <time datetime="{{ $post->published_at->toDateString() }}">{{ $post->published_at->format('M j, Y') }}</time>
         </p>
 
