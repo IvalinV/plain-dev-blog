@@ -34,3 +34,20 @@ it('creates an author', function () {
         'email' => 'ada@example.com',
     ]);
 });
+
+it('creates an author with a bio and auto-generated slug', function () {
+    Livewire::test(CreateAuthor::class)
+        ->fillForm([
+            'name' => 'Ada Lovelace',
+            'email' => 'ada2@example.com',
+            'bio' => 'Mathematician and writer.',
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    assertDatabaseHas(Author::class, [
+        'email' => 'ada2@example.com',
+        'slug' => 'ada-lovelace',
+        'bio' => 'Mathematician and writer.',
+    ]);
+});
