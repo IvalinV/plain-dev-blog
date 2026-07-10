@@ -327,7 +327,7 @@ Place the route with the other blog routes, before the `sitemap`/`robots` routes
 
 - [ ] **Step 5: Create the view**
 
-Create `resources/views/authors/show.blade.php`:
+Create `resources/views/authors/show.blade.php`. Layout is inspired by mattpocock.com: a centered profile with a prominent circular avatar, a friendly first-person greeting, a concise bio, and a compact social link, followed by the post list. Dark-mode variants are included inline here (so Task 6 only needs to touch the post-list section).
 
 ```blade
 @extends('layouts.blog')
@@ -341,29 +341,32 @@ Create `resources/views/authors/show.blade.php`:
 @section('meta_description', $authorDescription)
 
 @section('content')
-    <a href="{{ route('blog.index') }}" class="text-sm text-amber-600 hover:underline">← Back to all posts</a>
+    <a href="{{ route('blog.index') }}" class="text-sm text-amber-600 hover:underline dark:text-amber-400">← Back to all posts</a>
 
-    <div class="mt-6 flex items-center gap-4">
+    <div class="mt-8 flex flex-col items-center text-center">
         @if ($authorImageUrl)
-            <img src="{{ $authorImageUrl }}" alt="{{ $author->name }}" class="h-20 w-20 rounded-full object-cover" loading="lazy" decoding="async">
+            <img src="{{ $authorImageUrl }}" alt="{{ $author->name }}" class="h-28 w-28 rounded-full object-cover" loading="lazy" decoding="async">
         @else
-            <div class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-200 text-2xl font-semibold text-gray-500">
+            <div class="flex h-28 w-28 items-center justify-center rounded-full bg-gray-200 text-3xl font-semibold text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                 {{ Str::of($author->name)->substr(0, 1)->upper() }}
             </div>
         @endif
-        <div>
-            <h1 class="text-2xl font-bold sm:text-3xl">{{ $author->name }}</h1>
-            @if ($author->social_media)
-                <a href="{{ $author->social_media }}" class="text-sm text-amber-600 hover:underline" rel="me noopener noreferrer" target="_blank">{{ $author->social_media }}</a>
-            @endif
-        </div>
+
+        <h1 class="mt-5 text-2xl font-bold sm:text-3xl">Hey, I'm {{ $author->name }}</h1>
+
+        @if ($author->bio)
+            <p class="mt-3 max-w-prose leading-relaxed text-gray-600 dark:text-gray-400">{{ $author->bio }}</p>
+        @endif
+
+        @if ($author->social_media)
+            <a href="{{ $author->social_media }}" target="_blank" rel="me noopener noreferrer"
+                class="mt-5 inline-flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800">
+                {{ $author->social_media }} ↗
+            </a>
+        @endif
     </div>
 
-    @if ($author->bio)
-        <p class="mt-4 leading-relaxed text-gray-600">{{ $author->bio }}</p>
-    @endif
-
-    <h2 class="mt-10 text-lg font-semibold">Posts</h2>
+    <h2 class="mt-12 text-lg font-semibold">Posts</h2>
     <div class="mt-4 space-y-6">
         @forelse ($posts as $post)
             <article class="border-b border-gray-200 pb-6">
@@ -384,7 +387,7 @@ Create `resources/views/authors/show.blade.php`:
 @endsection
 ```
 
-Note: confirm the card markup against `resources/views/blog/index.blade.php` and match its class choices if they differ; the above mirrors the post-page style.
+Note: confirm the card markup against `resources/views/blog/index.blade.php` and match its class choices if they differ; the above mirrors the post-page style. The `assertSee('https://example.com/ada')` test still passes because the social URL remains in the link's `href` and its visible text.
 
 - [ ] **Step 6: Link the author name from the post page**
 
@@ -706,9 +709,9 @@ Open `resources/views/blog/show.blade.php`. Apply the same mapping from Step 1 t
 - `[&_blockquote]:text-gray-600` → add `dark:[&_blockquote]:text-gray-400`
 - The `[&_pre]` code block is already dark (`bg-gray-900`/`text-gray-100`) — leave as-is (readable in both themes).
 
-- [ ] **Step 3: Add dark variants to authors/show**
+- [ ] **Step 3: Add dark variants to authors/show post list**
 
-Open `resources/views/authors/show.blade.php`. Apply the Step 1 mapping to the name, bio text, social link, "Posts" heading, card borders, meta text, and the avatar placeholder (`bg-gray-200`/`text-gray-500` → add `dark:bg-gray-800`/`dark:text-gray-400`).
+Open `resources/views/authors/show.blade.php`. The centered profile block already has dark variants (written in Task 2). Apply the Step 1 mapping only to the remaining post-list section: the "Posts" heading, `border-gray-200` card borders, `text-gray-500` meta text, and `text-gray-600` excerpt/empty text.
 
 - [ ] **Step 4: Build and verify manually**
 
