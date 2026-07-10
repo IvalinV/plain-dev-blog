@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Author;
 use App\Models\Post;
 
 beforeEach(function () {
@@ -32,4 +33,14 @@ it('404s for a scheduled post', function () {
 
 it('404s for an unknown slug', function () {
     $this->get(route('blog.show', 'no-such-slug'))->assertNotFound();
+});
+
+it('links the author name to the author page', function () {
+    $author = Author::factory()->create(['name' => 'Ada Lovelace']);
+    $post = Post::factory()->for($author)->published()->create();
+
+    $this->get(route('blog.show', $post->slug))
+        ->assertOk()
+        ->assertSee(route('authors.show', $author->slug), escape: false)
+        ->assertSee('Ada Lovelace');
 });
