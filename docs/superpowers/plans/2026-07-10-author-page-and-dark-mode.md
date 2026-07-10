@@ -636,7 +636,19 @@ In `resources/views/layouts/blog.blade.php`, change the `<body>` tag:
 <body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
 ```
 
-- [ ] **Step 5: Wire the toggle in JS**
+- [ ] **Step 5: Add the footer**
+
+In `resources/views/layouts/blog.blade.php`, add a footer immediately after the closing `</main>` tag (copyright only, auto-updating year, dark-mode styled to match the header):
+
+```blade
+    <footer class="border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+        <div class="mx-auto max-w-3xl px-4 py-6 text-sm text-gray-500 dark:text-gray-400">
+            &copy; {{ date('Y') }} Plain Dev Blog. All rights reserved.
+        </div>
+    </footer>
+```
+
+- [ ] **Step 6: Wire the toggle in JS**
 
 Set `resources/js/app.js` contents:
 
@@ -651,16 +663,16 @@ if (toggle) {
 }
 ```
 
-- [ ] **Step 6: Build and verify manually**
+- [ ] **Step 7: Build and verify manually**
 
 Run: `npm run build`
-Expected: build succeeds. Then load the site, click the toggle: background/header/text switch between light and dark, and the choice survives a page reload.
+Expected: build succeeds. Then load the site, click the toggle: background/header/footer/text switch between light and dark, and the choice survives a page reload.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
 git add resources/css/app.css resources/js/app.js resources/views/layouts/blog.blade.php
-git commit -m "feat: add class-based dark mode toggle with system default"
+git commit -m "feat: add class-based dark mode toggle, footer, and system default"
 ```
 
 ---
@@ -729,6 +741,7 @@ git commit -m "feat: dark-mode styling for blog and author views"
 - Filament form (slug/image/bio) → Task 4 ✓
 - Factory/tests → Tasks 1, 2, 3, 4 ✓
 - Dark `@custom-variant` + no-flash script + toggle → Task 5 ✓
+- Footer (copyright only, auto year, dark-styled) → Task 5 ✓
 - Dark styling across layout/index/show/authors → Tasks 5, 6 ✓
 - Reseed note for existing rows → captured in spec; new dev DBs use `migrate:fresh --seed` (no seeder change required since authors aren't seeded).
 
