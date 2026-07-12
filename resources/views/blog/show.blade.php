@@ -35,23 +35,19 @@
 
 @section('content')
     <article>
-        <a href="{{ route('blog.index') }}" class="text-sm text-amber-600 hover:underline">← Back to all posts</a>
+        <a href="{{ route('blog.index') }}" class="text-sm text-amber-600 hover:underline dark:text-amber-400">← Back to all posts</a>
 
         <h1 class="mt-4 text-2xl font-bold sm:text-3xl">{{ $post->title }}</h1>
 
-        <p class="mt-2 text-sm text-gray-500">
-            @if ($post->author->social_media)
-                <a href="{{ $post->author->social_media }}" class="hover:underline" rel="author">{{ $post->author->name }}</a>
-            @else
-                {{ $post->author->name }}
-            @endif
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <a href="{{ route('authors.show', $post->author->slug) }}" class="hover:underline" rel="author">{{ $post->author->name }}</a>
             · <time datetime="{{ $post->published_at->toDateString() }}">{{ $post->published_at->format('M j, Y') }}</time>
         </p>
 
         @if ($post->tags->isNotEmpty())
             <div class="mt-3 flex flex-wrap gap-2">
                 @foreach ($post->tags as $postTag)
-                    <a href="{{ route('blog.index', ['tag' => $postTag->slug]) }}" class="rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-200">#{{ $postTag->name }}</a>
+                    <a href="{{ route('blog.index', ['tag' => $postTag->slug]) }}" class="rounded bg-gray-100 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">#{{ $postTag->name }}</a>
                 @endforeach
             </div>
         @endif
@@ -61,8 +57,8 @@
         @endif
 
         <div class="mt-6 space-y-4 break-words leading-relaxed
-            [&_a]:text-amber-600 [&_a]:underline
-            [&_blockquote]:border-l-4 [&_blockquote]:border-gray-200 [&_blockquote]:pl-4 [&_blockquote]:text-gray-600
+            [&_a]:text-amber-600 [&_a]:underline dark:[&_a]:text-amber-400
+            [&_blockquote]:border-l-4 [&_blockquote]:border-gray-200 [&_blockquote]:pl-4 [&_blockquote]:text-gray-600 dark:[&_blockquote]:border-gray-700 dark:[&_blockquote]:text-gray-400
             [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold sm:[&_h2]:text-2xl
             [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold sm:[&_h3]:text-xl
             [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded
