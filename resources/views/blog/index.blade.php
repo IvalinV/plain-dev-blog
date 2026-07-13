@@ -2,8 +2,9 @@
 
 @section('title', $tag ? "Posts tagged $tag->name" : 'Plain Dev Blog')
 @section('meta_description', $tag
-    ? "Articles and tutorials tagged {$tag->name} on Plain Dev Blog."
+    ? "Articles and tutorials tagged $tag->name on Plain Dev Blog."
     : 'Plain Dev Blog — articles and tutorials on software development.')
+@section('og_image', asset('images/blog_social_image.jpg'))
 
 @section('content')
     @if ($tag)
