@@ -1,7 +1,7 @@
 @extends('layouts.blog')
 
 @php
-    $postImageUrl = $post->image ? Storage::disk('public')->url($post->image) : null;
+    $postImageUrl = $post->image ? Storage::disk('s3')->url($post->image) : null;
     $postDescription = $post->excerpt ?: Str::limit(strip_tags($post->body), 155);
 @endphp
 
