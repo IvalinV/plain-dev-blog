@@ -18,7 +18,7 @@
         <article class="mb-8 border-b border-gray-200 pb-8 dark:border-gray-800">
             @if ($post->image)
                 <a href="{{ route('blog.show', $post->slug) }}" tabindex="-1" aria-hidden="true">
-                    <img src="{{ Storage::disk('public')->url($post->image) }}" alt="{{ $post->title }}" width="1600" height="900" class="mb-4 aspect-video w-full rounded object-cover" loading="lazy" decoding="async">
+                    <img src="{{ Storage::disk('s3')->url($post->image) }}" alt="{{ $post->title }}" width="1600" height="900" class="mb-4 aspect-video w-full rounded object-cover" loading="lazy" decoding="async">
                 </a>
             @endif
             <h2 class="text-xl font-semibold sm:text-2xl">
