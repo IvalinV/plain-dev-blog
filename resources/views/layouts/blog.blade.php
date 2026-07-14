@@ -53,6 +53,16 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ4LJB6KBZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MQ4LJB6KBZ');
+    </script>
 </head>
 <body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
     <header class="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
