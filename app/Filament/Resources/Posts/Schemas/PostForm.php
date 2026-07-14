@@ -40,7 +40,7 @@ class PostForm
                     ]),
                 FileUpload::make('image')
                     ->image()
-                    ->disk('public')
+                    ->disk('s3')
                     ->directory('posts'),
                 Textarea::make('excerpt')
                     ->rows(3)

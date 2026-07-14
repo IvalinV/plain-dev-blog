@@ -30,7 +30,7 @@ class AuthorForm
                     ->maxLength(255),
                 FileUpload::make('image')
                     ->image()
-                    ->disk('public')
+                    ->disk('s3')
                     ->directory('authors'),
                 Textarea::make('bio')
                     ->rows(3)
