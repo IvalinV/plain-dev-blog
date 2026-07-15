@@ -49,6 +49,10 @@ it('renders social share buttons', function () {
     $response->assertSee('linkedin.com/sharing/share-offsite', escape: false);
     $response->assertSee('reddit.com/submit', escape: false);
     $response->assertSee('id="clip"', escape: false);
+
+    // Font Awesome CDN is gone; icons are self-hosted SVGs.
+    $response->assertDontSee('font-awesome', escape: false);
+    $response->assertDontSee('fa-', escape: false);
 });
 
 it('links the author name to the author page', function () {
