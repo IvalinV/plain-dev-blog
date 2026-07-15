@@ -35,6 +35,22 @@ it('404s for an unknown slug', function () {
     $this->get(route('blog.show', 'no-such-slug'))->assertNotFound();
 });
 
+it('renders social share buttons', function () {
+    $post = Post::factory()->published()->create();
+
+    $response = $this->get(route('blog.show', $post->slug))->assertOk();
+
+    $response->assertSee('social-buttons', escape: false);
+    $response->assertSee('twitter.com/intent/tweet', escape: false);
+    $response->assertSee(urlencode(route('blog.show', $post->slug)), escape: false);
+
+    // Buttons render as inline SVGs, not icon-font spans.
+    $response->assertSee('<svg', escape: false);
+    $response->assertSee('linkedin.com/sharing/share-offsite', escape: false);
+    $response->assertSee('reddit.com/submit', escape: false);
+    $response->assertSee('id="clip"', escape: false);
+});
+
 it('links the author name to the author page', function () {
     $author = Author::factory()->create(['name' => 'Ada Lovelace']);
     $post = Post::factory()->for($author)->published()->create();
