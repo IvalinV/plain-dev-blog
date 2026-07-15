@@ -68,7 +68,7 @@
             {!! $post->body !!}
         </div>
 
-        <div class="mt-10 border-t border-gray-200 pt-8 dark:border-gray-800">
+        <div class="mt-10 border-t border-gray-200 pt-4 pb-10 dark:border-gray-800">
             <p class="mb-3 text-sm font-medium text-gray-500 dark:text-gray-400">Share this post</p>
             {!! ShareButtons::currentPage($post->title, [
                     'rel' => 'nofollow noopener noreferrer',
