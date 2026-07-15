@@ -1,7 +1,7 @@
 @extends('layouts.blog')
 
 @php
-    $authorImageUrl = $author->image ? Storage::disk('public')->url($author->image) : null;
+    $authorImageUrl = $author->image ? Storage::disk('s3')->url($author->image) : null;
     $authorDescription = $author->bio ? Str::limit($author->bio, 155) : "Posts by {$author->name}.";
 @endphp
 
