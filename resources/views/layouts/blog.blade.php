@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased">
+<html lang="en" class="antialiased h-full">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,18 +64,18 @@
         gtag('config', 'G-MQ4LJB6KBZ');
     </script>
 </head>
-<body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+<body class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 h-full">
     <header class="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
         <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-6">
             <a href="{{ route('blog.index') }}" class="text-xl font-semibold">Plain Dev Blog</a>
             <button type="button" id="theme-toggle" aria-label="Toggle dark mode"
                 class="rounded p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
-                <span class="dark:hidden" aria-hidden="true">🌙</span>
-                <span class="hidden dark:inline" aria-hidden="true">☀️</span>
+                <span class="dark:hidden cursor-pointer" aria-hidden="true">🌙</span>
+                <span class="hidden dark:inline cursor-pointer" aria-hidden="true">☀️</span>
             </button>
         </div>
     </header>
-    <main class="mx-auto max-w-3xl px-4 py-10">
+    <main class="mx-auto max-w-3xl h-full w-fit px-4 py-10">
         @yield('content')
     </main>
     <footer class="border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">

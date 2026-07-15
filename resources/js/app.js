@@ -1,3 +1,5 @@
+import './share-buttons.js';
+
 const toggle = document.getElementById('theme-toggle');
 
 if (toggle) {
