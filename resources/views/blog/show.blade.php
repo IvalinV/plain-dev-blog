@@ -56,7 +56,7 @@
             <img src="{{ $postImageUrl }}" alt="{{ $post->title }}" class="mt-6 w-full rounded" loading="lazy" decoding="async">
         @endif
 
-        <div class="mt-6 space-y-4 break-words leading-relaxed
+        <div class="mt-6 space-y-4 wrap-break-words leading-relaxed
             [&_a]:text-amber-600 [&_a]:underline dark:[&_a]:text-amber-400
             [&_blockquote]:border-l-4 [&_blockquote]:border-gray-200 [&_blockquote]:pl-4 [&_blockquote]:text-gray-600 dark:[&_blockquote]:border-gray-700 dark:[&_blockquote]:text-gray-400
             [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold sm:[&_h2]:text-2xl
@@ -66,6 +66,19 @@
             [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-gray-900 [&_pre]:p-4 [&_pre]:text-sm [&_pre]:text-gray-100
             [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto">
             {!! $post->body !!}
+        </div>
+
+        <div class="mt-10 border-t border-gray-200 pt-8 dark:border-gray-800">
+            <p class="mb-3 text-sm font-medium text-gray-500 dark:text-gray-400">Share this post</p>
+            {!! ShareButtons::currentPage($post->title, [
+                    'rel' => 'nofollow noopener noreferrer',
+                ])
+                ->twitter("/blog/$post->slug")
+                ->linkedin("/blog/$post->slug")
+                ->reddit("/blog/$post->slug")
+                ->copylink()
+                ->render()
+            !!}
         </div>
     </article>
 @endsection
