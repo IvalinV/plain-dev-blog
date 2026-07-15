@@ -50,9 +50,13 @@ it('renders social share buttons', function () {
     $response->assertSee('reddit.com/submit', escape: false);
     $response->assertSee('id="clip"', escape: false);
 
+    // Click handling depends on every share-button svg carrying this class.
+    $response->assertSee('pointer-events-none', escape: false);
+
     // Font Awesome CDN is gone; icons are self-hosted SVGs.
     $response->assertDontSee('font-awesome', escape: false);
-    $response->assertDontSee('fa-', escape: false);
+    $response->assertDontSee('class="fab', escape: false);
+    $response->assertDontSee('class="fas', escape: false);
 });
 
 it('links the author name to the author page', function () {
