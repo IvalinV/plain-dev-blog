@@ -2,13 +2,19 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Models\Post;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Js;
+use Livewire\Component;
 
 class PostForm
 {
@@ -23,6 +29,26 @@ class PostForm
                     ->helperText('Leave blank to auto-generate from the title.')
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
+                TextInput::make('url')
+                    ->label('URL')
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->formatStateUsing(fn (?Post $record): ?string => $record?->url)
+                    ->helperText('Auto-generated from the slug. Available after the post is saved.')
+                    ->suffixAction(
+                        Action::make('copyUrl')
+                            ->icon(Heroicon::Clipboard)
+                            ->tooltip('Copy to clipboard')
+                            ->visible(fn (?string $state): bool => filled($state))
+                            ->action(function (?string $state, Component $livewire): void {
+                                $livewire->js('window.navigator.clipboard.writeText('.Js::from($state).')');
+
+                                Notification::make()
+                                    ->title('URL copied to clipboard')
+                                    ->success()
+                                    ->send();
+                            }),
+                    ),
                 Select::make('author_id')
                     ->relationship('author', 'name')
                     ->required()

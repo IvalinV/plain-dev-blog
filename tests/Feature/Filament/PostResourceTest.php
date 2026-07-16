@@ -56,6 +56,22 @@ it('requires a title and a body', function () {
         ->assertHasFormErrors(['title', 'body']);
 });
 
+it('shows the read-only url on the edit page', function () {
+    $post = Post::factory()->create(['slug' => 'my-post']);
+
+    Livewire::test(EditPost::class, ['record' => $post->getKey()])
+        ->assertFormFieldExists('url')
+        ->assertFormSet(['url' => $post->url]);
+});
+
+it('copies the url to the clipboard from the edit page', function () {
+    $post = Post::factory()->create(['slug' => 'my-post']);
+
+    Livewire::test(EditPost::class, ['record' => $post->getKey()])
+        ->callFormComponentAction('url', 'copyUrl')
+        ->assertNotified('URL copied to clipboard');
+});
+
 it('loads the edit page and updates a post', function () {
     $post = Post::factory()->create();
 

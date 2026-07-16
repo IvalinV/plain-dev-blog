@@ -64,4 +64,9 @@ class Post extends Model
     {
         return 'title';
     }
+
+    protected function url(): Attribute
+    {
+        return Attribute::get(fn (): string => route('blog.show', $this->slug));
+    }
 }
