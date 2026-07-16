@@ -50,6 +50,12 @@ it('scopes to published posts and excludes drafts and scheduled posts', function
         ->and($published->first()->is($live))->toBeTrue();
 });
 
+it('exposes a url pointing at the blog show route', function () {
+    $post = Post::factory()->create(['slug' => 'my-post']);
+
+    expect($post->url)->toBe(route('blog.show', 'my-post'));
+});
+
 it('reports is_published for a post published exactly now', function () {
     $post = Post::factory()->create(['published_at' => now()]);
 
