@@ -64,7 +64,9 @@
             [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded
             [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6
             [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-gray-900 [&_pre]:p-4 [&_pre]:text-sm [&_pre]:text-gray-100
-            [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto">
+            [&_table]:block [&_table]:w-full [&_table]:border-collapse [&_table]:overflow-x-auto
+            [&_td]:border [&_td]:border-gray-300 [&_td]:p-2 [&_td]:align-top dark:[&_td]:border-gray-600
+            [&_th]:border [&_th]:border-gray-300 [&_th]:bg-gray-100 [&_th]:p-2 [&_th]:text-start [&_th]:align-top [&_th]:font-bold dark:[&_th]:border-gray-600 dark:[&_th]:bg-gray-800 dark:[&_th]:text-white">
             {!! $post->body !!}
         </div>
 
