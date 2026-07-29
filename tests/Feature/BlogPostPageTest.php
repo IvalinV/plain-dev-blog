@@ -59,6 +59,30 @@ it('renders social share buttons', function () {
     $response->assertDontSee('class="fas', escape: false);
 });
 
+it('styles tables in the post body', function () {
+    $post = Post::factory()->published()->create([
+        'body' => '<table style="min-width: 50px"><colgroup><col><col></colgroup><tbody>'
+            .'<tr><th><p>Condition</p></th><th><p>Resolution</p></th></tr>'
+            .'<tr><td><p>Status trialing</p></td><td><p>End the trial.</p></td></tr>'
+            .'</tbody></table>',
+    ]);
+
+    $response = $this->get(route('blog.show', $post->slug))->assertOk();
+
+    // The editor's table markup must survive untouched.
+    $response->assertSee('<th><p>Condition</p></th>', escape: false);
+
+    // The frontend has no Tailwind Typography or fi-prose, so the post body
+    // styles are the only thing giving rich editor tables their grid.
+    $response->assertSee('[&_table]:border-collapse', escape: false);
+    $response->assertSee('[&_th]:border', escape: false);
+    $response->assertSee('[&_td]:border', escape: false);
+    $response->assertSee('[&_th]:p-2', escape: false);
+    $response->assertSee('[&_td]:p-2', escape: false);
+    $response->assertSee('[&_th]:text-start', escape: false);
+    $response->assertSee('[&_th]:font-bold', escape: false);
+});
+
 it('links the author name to the author page', function () {
     $author = Author::factory()->create(['name' => 'Ada Lovelace']);
     $post = Post::factory()->for($author)->published()->create();
