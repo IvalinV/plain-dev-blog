@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'mailerlite' => [
+        'api_key' => env('NEWSLETTER_API_KEY'),
+        'api_entpoint' => env('NEWSLETTER_ENDPOINT')
+    ]
+
 ];
