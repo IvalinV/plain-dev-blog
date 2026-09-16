@@ -5,15 +5,33 @@
     $authorDescription = $author->bio ? Str::limit($author->bio, 155) : "Posts by {$author->name}.";
 @endphp
 
+@push('structured-data')
+    <script type="application/ld+json">
+        {!!
+            json_encode([
+                '@'.'context' => 'https://schema.org',
+                '@type' => 'Person',
+                'name' => $author->name,
+                'url' => route('authors.show', $author->slug),
+                'description' => $authorDescription,
+                'image' => $authorImageUrl,
+                'sameAs' => array_values(array_filter([$author->social_media])),
+            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        !!}
+    </script>
+@endpush
+
 @section('content')
     <a href="{{ route('blog.index') }}" class="text-sm text-amber-600 hover:underline dark:text-amber-400"
         >← Back to all posts</a>
 
-    <div class="mt-8 flex flex-col items-center text-center">
+    <article class="mt-8 flex flex-col items-center text-center">
         @if ($authorImageUrl)
             <img
                 src="{{ $authorImageUrl }}"
                 alt="{{ $author->name }}"
+                width="112"
+                height="112"
                 class="h-28 w-28 rounded-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -65,7 +83,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </article>
 
     <h2 class="mt-12 text-lg font-semibold">Posts</h2>
     <div class="mt-4 space-y-6">
