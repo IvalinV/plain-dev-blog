@@ -29,13 +29,14 @@
                     class="hover:text-amber-600 dark:hover:text-amber-400"
                 >{{ $post->title }}</a>
             </h2>
-            <span class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                <a href="/authors/{{ $post->author->slug }}">
-                    {{ $post->author->name }}<a /> ·
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                <a href="{{ route('authors.show', $post->author->slug) }}">
+                    {{ $post->author->name }}</a> ·
                     <time
                         datetime="{{ $post->published_at->toDateString() }}"
                         >{{ $post->published_at->format('M j, Y') }}</time
-                    ></span>
+                    >
+            </p>
             @if ($post->excerpt)
                 <p class="mt-3 text-gray-700 dark:text-gray-300">{{ $post->excerpt }}</p>
             @endif

@@ -13,4 +13,12 @@
             <priority>0.8</priority>
         </url>
     @endforeach
+    @foreach ($authors as $author)
+        <url>
+            <loc>{{ route('authors.show', $author->slug) }}</loc>
+            <lastmod>{{ $author->updated_at->toAtomString() }}</lastmod>
+            <changefreq>monthly</changefreq>
+            <priority>0.6</priority>
+        </url>
+    @endforeach
 </urlset>
