@@ -15,6 +15,33 @@
 
     @head
 
+    <script type="application/ld+json">
+        {!!
+            json_encode([
+                '@'.'context' => 'https://schema.org',
+                '@graph' => [
+                    [
+                        '@type' => 'Organization',
+                        '@id' => url('/').'#organization',
+                        'name' => 'Plain Dev Blog',
+                        'url' => url('/'),
+                        'sameAs' => [
+                            'https://github.com/IvalinV',
+                            'https://x.com/IvallinV',
+                        ],
+                    ],
+                    [
+                        '@type' => 'WebSite',
+                        '@id' => url('/').'#website',
+                        'name' => 'Plain Dev Blog',
+                        'url' => url('/'),
+                        'publisher' => ['@id' => url('/').'#organization'],
+                    ],
+                ],
+            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        !!}
+    </script>
+
     @stack('structured-data')
 
     <script>

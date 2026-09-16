@@ -6,6 +6,7 @@ use App\Models\Author;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravel\Head\Enums\OgType;
 use Laravel\Head\Facades\Head;
 
 class AuthorController extends Controller
@@ -17,6 +18,8 @@ class AuthorController extends Controller
 
         Head::title($author->name);
         Head::description($authorDescription);
+        Head::canonical(route('authors.show', $author->slug), forceHttps: app()->isProduction());
+        Head::og(type: OgType::Profile, url: route('authors.show', $author->slug));
 
         if ($authorImageUrl !== null) {
             Head::ogImage($authorImageUrl);

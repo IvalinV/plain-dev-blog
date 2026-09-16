@@ -12,6 +12,7 @@
                 '@type' => 'BlogPosting',
                 'headline' => $post->title,
                 'description' => $post->excerpt ?: Str::limit(strip_tags($post->body), 155),
+                'url' => route('blog.show', $post->slug),
                 'datePublished' => $post->published_at?->toIso8601String(),
                 'dateModified' => $post->updated_at?->toIso8601String(),
                 'author' => [
@@ -24,6 +25,12 @@
                     '@type' => 'WebPage',
                     '@id' => route('blog.show', $post->slug),
                 ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => 'Plain Dev Blog',
+                    'url' => url('/'),
+                ],
+                'keywords' => $post->tags->pluck('name')->all(),
             ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
         !!}
     </script>
@@ -61,6 +68,8 @@
             <img
                 src="{{ $postImageUrl }}"
                 alt="{{ $post->title }}"
+                width="1600"
+                height="900"
                 class="mt-6 w-full rounded"
                 loading="lazy"
                 decoding="async"

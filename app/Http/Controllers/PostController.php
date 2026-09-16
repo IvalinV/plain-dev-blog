@@ -31,6 +31,9 @@ class PostController extends Controller
             Head::description("Articles and tutorials tagged $tag->name on Plain Dev Blog.");
         }
 
+        Head::canonical(url()->current(), forceHttps: app()->isProduction());
+        Head::og(url: url()->current());
+
         return view('blog.index', ['posts' => $posts, 'tag' => $tag]);
     }
 
@@ -45,7 +48,8 @@ class PostController extends Controller
 
         Head::title($post->title);
         Head::description($postDescription);
-        Head::og(type: OgType::Article);
+        Head::canonical(route('blog.show', $post->slug), forceHttps: app()->isProduction());
+        Head::og(type: OgType::Article, url: route('blog.show', $post->slug));
 
         if ($postImageUrl !== null) {
             Head::ogImage($postImageUrl);
