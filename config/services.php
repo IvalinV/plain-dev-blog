@@ -37,7 +37,12 @@ return [
 
     'mailerlite' => [
         'api_key' => env('NEWSLETTER_API_KEY'),
-        'api_entpoint' => env('NEWSLETTER_ENDPOINT')
-    ]
+        'api_entpoint' => env('NEWSLETTER_ENDPOINT'),
+    ],
 
+    'laravel_cloud' => [
+        'api_key' => env('LARAVEL_CLOUD_API_TOKEN'),
+        'base_url' => env('LARAVEL_CLOUD_BASE_URL', 'https://cloud.laravel.com/api/'),
+        'usd_to_eur_rate' => (float) env('LARAVEL_CLOUD_USD_TO_EUR_RATE', 0.90),
+    ],
 ];
