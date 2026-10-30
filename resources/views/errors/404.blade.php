@@ -8,7 +8,7 @@
     })();
 </script>
 
-<main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8 dark:bg-gray-900">
+<main class="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8 dark:bg-gray-900">
     <div class="text-center">
         <p class="text-base font-semibold text-amber-600 dark:text-amber-400">404</p>
         <h1 class="mt-4 text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl dark:text-white">
